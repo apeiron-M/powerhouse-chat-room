@@ -1,0 +1,60 @@
+scalar Amount_Tokens
+scalar EthereumAddress
+scalar Amount_Percentage
+scalar EmailAddress
+scalar Date
+scalar DateTime
+scalar URL
+scalar Amount_Money
+scalar OLabel
+scalar Currency
+scalar PHID
+scalar OID
+type ChatRoomState {
+  id: OID!                    # Unique identifier for the chat-room
+  name: String!               # Name of the chat-room
+  description: String         # Optional description of the chat-room
+  createdAt: DateTime!        # Timestamp of when the chat-room was created
+  createdBy: ID!             # Agent ID of the user who created the chat-room
+  messages: [Message!]!       # List of messages in the chat-room
+}
+
+type Message {
+  id: OID!                    # Unique identifier for the message
+  senderId: ID!              # Agent ID of the message sender
+  content: String             # Message content
+  sentAt: DateTime!           # Timestamp of when the message was sent
+  reactions: [Reaction!]      # Reactions to the message
+}
+
+type Reaction {
+  id: OID!                    # Unique identifier for the reaction
+  type: ReactionType!         # Type of reaction (one of the predefined emoji)
+  reactedBy: ID!             # Agent ID of the user who reacted
+  reactedAt: DateTime!        # Timestamp of the reaction
+}
+
+enum ReactionType {
+  THUMBS_UP
+  THUMBS_DOWN
+  LAUGH
+  HEART
+  CRY
+}
+
+
+
+
+# add_message
+
+input AddMessageInput {
+  chatRoomId: OID!        # ID of the chat-room where the message is being added
+  senderId: ID!          # ID of the user sending the message
+  content: String!        # Content of the message
+}
+
+input AddEmojiReactionInput {
+  messageId: OID!         # ID of the message to which the reaction is being added
+  reactedBy: ID!         # ID of the user adding the reaction
+  type: ReactionType!     # Type of the reaction (emoji)
+}
